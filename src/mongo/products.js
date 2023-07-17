@@ -19,6 +19,11 @@ const Products = new mongoose.Schema({
         type: Number,
         require: true
     },
+    category_id: {
+        type: mongoose.Types.ObjectId,
+        ref: "category",
+        require: true
+    },
     timeUpdate: {
         type: String,
         require: true

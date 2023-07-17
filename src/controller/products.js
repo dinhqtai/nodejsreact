@@ -107,3 +107,18 @@ export const searchProductsPriceMax = async (req, res) => {
         })
     }
 }
+export const searchProductsCategory = async (req, res) => {
+    try {
+        const checkSearch = await products.find({ category_id: req.body.category_id })
+        if (checkSearch.length === 0) {
+            return res.status(400).json({
+                message: "Sản phẩm không tồn tại"
+            })
+        }
+        return res.status(200).json(checkSearch)
+    } catch (error) {
+        return res.status(400).json({
+            message: error
+        })
+    }
+}
