@@ -8,12 +8,16 @@ const discountCode = new mongoose.Schema({
         type: Number,
         require: true
     },
-    discountCode: {
+    discount: {
         type: String,
         require: true
     },
     soLuong: {
         type: Number,
+        require: true
+    },
+    timeUpdate: {
+        type: String,
         require: true
     }
 })

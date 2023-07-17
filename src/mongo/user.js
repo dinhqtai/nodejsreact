@@ -4,7 +4,7 @@ const Users = new mongoose.Schema({
         type: String,
         require: true
     },
-    phone: {
+    money: {
         type: Number,
         require: true
     },

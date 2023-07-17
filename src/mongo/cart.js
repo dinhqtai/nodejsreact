@@ -7,14 +7,6 @@ const Cart = new mongoose.Schema({
                 ref: "Products",
                 require: true
             },
-            name: {
-                type: String,
-                require: true
-            },
-            images: {
-                type: String,
-                require: true
-            },
             price: {
                 type: Number,
                 require: true

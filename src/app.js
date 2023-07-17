@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import router from "./routes/index.js";
 import routerProducts from "./routes/products.js";
+import routerDiscountCode from "./routes/discountCode.js";
 //config
 const app = express();
 const API_DB = process.env.API_DB;
@@ -12,6 +13,7 @@ dotenv.config();
 // middleware
 app.use(cors());
 app.use(express.json());
+app.use("/api", routerDiscountCode)
 app.use("/api", routerProducts)
 // router
 app.use("/api", router);

@@ -4,10 +4,6 @@ const Products = new mongoose.Schema({
         type: String,
         require: true
     },
-    original_price: {
-        type: Number,
-        require: true
-    },
     price: {
         type: Number,
         require: true
@@ -23,5 +19,9 @@ const Products = new mongoose.Schema({
         type: Number,
         require: true
     },
+    timeUpdate: {
+        type: String,
+        require: true
+    }
 })
 export default mongoose.model("Product", Products)
