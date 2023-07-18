@@ -4,7 +4,7 @@ const Users = new mongoose.Schema({
         type: String,
         require: true
     },
-    phone: {
+    money: {
         type: Number,
         require: true
     },
@@ -50,5 +50,9 @@ const Users = new mongoose.Schema({
             }
         }
     ],
+    timeUpdate: {
+        type: String,
+        require: true
+    }
 })
 export default mongoose.model("User", Users);

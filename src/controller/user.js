@@ -2,6 +2,8 @@
 import bcrypt from "bcryptjs"
 import user from "../mongo/user";
 import jwt from "jsonwebtoken"
+import { DateTime } from "luxon";
+const timeNow = DateTime.now().toLocaleString({ weekday: 'short', month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
 export const signup = async (req, res) => {
     try {
         const { password, email, name, phone } = req.body;
@@ -10,7 +12,8 @@ export const signup = async (req, res) => {
             name,
             phone,
             email,
-            password: maHoa
+            password: maHoa,
+            timeUpdate: timeNow
         })
         users.password = undefined;
         return res.status(200).json({
@@ -66,6 +69,21 @@ export const getUserAll = async (req, res) => {
     try {
         const users = await user.find()
         return res.status(200).json(users)
+    } catch (error) {
+        return res.status(400).json({
+            message: error
+        })
+    }
+}
+export const searchUserName = async (req, res) => {
+    try {
+        const checkSearchName = await user.findOne({ name: req.body.name })
+        if (!checkSearchName) {
+            return res.status(400).json({
+                message: "Người dùng không tồn tại"
+            })
+        }
+        return res.status(200).json(checkSearchName)
     } catch (error) {
         return res.status(400).json({
             message: error
