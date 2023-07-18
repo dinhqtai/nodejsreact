@@ -1,6 +1,8 @@
 import Joi from "joi";
 export const DangKi = Joi.object({
-    email: Joi.string().email().required(),
+    email: Joi.string().email().required().message({
+         
+    }),
     password: Joi.string().required()
 });
 export const DangNhap = Joi.object({

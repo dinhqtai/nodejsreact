@@ -4,7 +4,5 @@ export const ModelCategory = Joi.object({
         "string.min": "Tên mã giảm giá bắt buộc lớn hơn 5 kí tự",
         "any.required": "Không được để trống ",
     }),
-    // imgae: Joi.string().required().message({
-    //     "any.required": "Không được để trống ",
-    // }),
+    image: Joi.string().required()
 })

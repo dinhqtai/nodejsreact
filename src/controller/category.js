@@ -1,3 +1,4 @@
+import { get } from "superagent";
 import { ModelCategory } from "../model/category";
 import category from "../mongo/category";
 import products from "../mongo/products";
@@ -68,8 +69,11 @@ export const deleteCategory = async (req, res) => {
                 message: "Đã có lỗi xảy ra"
             })
         }
-        const deleteProduct = await products.deleteMany({ category_id: req.params.id })
-        return res.status(200).json({ Category, deleteProduct })
+        const updateProducts = await products.updateMany(
+            { category_id: req.params.id },
+            { $set: { category_id: null } }
+        )
+        return res.status(200).json({ updateProducts })
     } catch (error) {
         return res.status(400).json({
             message: error
