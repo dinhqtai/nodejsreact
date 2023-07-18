@@ -4,6 +4,10 @@ const category = new mongoose.Schema({
         type: String,
         require: true
     },
+    image: {
+        type: String,
+        require: true
+    },
     timeUpdate: {
         type: String,
         require: true

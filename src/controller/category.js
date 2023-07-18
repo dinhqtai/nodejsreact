@@ -1,4 +1,6 @@
+import { ModelCategory } from "../model/category";
 import category from "../mongo/category";
+import products from "../mongo/products";
 import { DateTime } from "luxon";
 const timeNow = DateTime.now().toLocaleString({ weekday: 'short', month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
 export const getAll = async (req, res) => {
@@ -24,7 +26,13 @@ export const getCategory = async (req, res) => {
 }
 export const postCategory = async (req, res) => {
     try {
-        const { name } = req.body
+        const { error } = ModelCategory.validate(req.body)
+        if (error) {
+            return res.status(400).json({
+                message: error.details[0].message
+            })
+        }
+        const { name, image } = req.body
         const searchCategory = await category.findOne({ name: req.body.name })
         if (searchCategory) {
             return res.status(400).json({
@@ -32,7 +40,7 @@ export const postCategory = async (req, res) => {
             })
         }
         const Category = await category.create({
-            name, timeUpdate: timeNow
+            name, image, timeUpdate: timeNow
         })
         return res.status(200).json({ Category })
     } catch (error) {
@@ -55,7 +63,13 @@ export const updateCategory = async (req, res) => {
 export const deleteCategory = async (req, res) => {
     try {
         const Category = await category.findByIdAndDelete(req.params.id)
-        return res.status(200).json(Category)
+        if (!Category) {
+            return res.status(400).json({
+                message: "Đã có lỗi xảy ra"
+            })
+        }
+        const deleteProduct = await products.deleteMany({ category_id: req.params.id })
+        return res.status(200).json({ Category, deleteProduct })
     } catch (error) {
         return res.status(400).json({
             message: error

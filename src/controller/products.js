@@ -1,3 +1,4 @@
+import { ModelProducts } from "../model/products";
 import products from "../mongo/products";
 import { DateTime } from "luxon";
 const timeNow = DateTime.now().toLocaleString({ weekday: 'short', month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
@@ -23,9 +24,15 @@ export const getProducts = async (req, res) => {
 }
 export const postProducts = async (req, res) => {
     try {
-        const { name, price, image, desc, soLuong } = req.body
+        const { name, price, image, desc, soLuong, category_id } = req.body
+        const { error } = ModelProducts.validate(req.body)
+        if (error) {
+            return res.status(400).json({
+                message: error.details[0].message
+            })
+        }
         const Product = await products.create({
-            name, price, image, desc, soLuong, timeUpdate: timeNow
+            name, price, image, desc, soLuong, category_id, timeUpdate: timeNow
         })
         return res.status(200).json({ Product })
     } catch (error) {

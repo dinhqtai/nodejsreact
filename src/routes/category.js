@@ -3,7 +3,7 @@ import { deleteCategory, getAll, postCategory, searchCategory, updateCategory } 
 
 const router = express.Router();
 router.get("/searchCategory", searchCategory)
-router.get("/category/:id", getAll);
+router.get("/category", getAll);
 router.put("/category/:id", updateCategory);
 router.post("/category", postCategory);
 router.delete("/category/:id", deleteCategory);
