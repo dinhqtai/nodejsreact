@@ -114,6 +114,16 @@ export const searchProductsPriceMax = async (req, res) => {
         })
     }
 }
+export const searchProductsPriceSort = async (req, res) => {
+    try {
+        const checkSearchPrice = await products.find().sort({ price: -1 })
+        return res.status(200).json(checkSearchPrice)
+    } catch (error) {
+        return res.status(400).json({
+            message: error
+        })
+    }
+}
 export const searchProductsCategory = async (req, res) => {
     try {
         const checkSearch = await products.find({ category_id: req.body.category_id })

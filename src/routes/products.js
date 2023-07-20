@@ -1,9 +1,10 @@
 import express from "express";
-import { deleteProduct, getAll, getProducts, postProducts, searchProductsCategory, searchProductsCategoryDetail, searchProductsName, searchProductsPriceMax, searchProductsPriceMin, update } from "../controller/products";
+import { deleteProduct, getAll, getProducts, postProducts, searchProductsCategory, searchProductsCategoryDetail, searchProductsName, searchProductsPriceMax, searchProductsPriceMin, searchProductsPriceSort, update } from "../controller/products";
 const router = express.Router();
 router.post("/searchProductsName", searchProductsName)
 router.post("/searchPriceMin", searchProductsPriceMin)
 router.post("/searchPriceMax", searchProductsPriceMax)
+router.get("/searchPriceSort", searchProductsPriceSort)
 router.post("/searchProductCategory", searchProductsCategory)
 router.post("/searchProductCategoryDetail", searchProductsCategoryDetail)
 router.get("/products", getAll);
