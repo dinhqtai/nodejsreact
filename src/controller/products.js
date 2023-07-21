@@ -62,14 +62,17 @@ export const deleteProduct = async (req, res) => {
     }
 }
 export const searchProductsName = async (req, res) => {
+
     try {
+        const checkSearchNameOne = await products.find({ name: req.body.name })
         const checkSearchName = await products.find({ name: { $regex: req.body.name } })
+        const checkSearchAll = [...checkSearchNameOne, ...checkSearchName]
         // if (checkSearchName.  === 0) {
         //     return res.status(400).json({
         //         message: "Sản phẩm không tồn tại"
         //     })
         // }
-        return res.status(200).json({ checkSearchName })
+        return res.status(200).json({ checkSearchAll })
     } catch (error) {
         return res.status(400).json({
             message: error
