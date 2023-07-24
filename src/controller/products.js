@@ -157,7 +157,7 @@ export const searchProducts = async (req, res) => {
     try {
         const { priceMax, priceMin, name } = req.body;
 
-        // let searchQuery = {};
+        let searchQuery = {};
         // if (name && !isNaN(name)) {
         //     searchQuery.price = { ...searchQuery.price, $regex: String(name) };
         // }
