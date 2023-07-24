@@ -64,15 +64,49 @@ export const deleteProduct = async (req, res) => {
 export const searchProductsName = async (req, res) => {
 
     try {
-        const checkSearchNameOne = await products.find({ name: req.body.name })
         const checkSearchName = await products.find({ name: { $regex: req.body.name } })
-        const checkSearchAll = [...checkSearchNameOne, ...checkSearchName]
         // if (checkSearchName.  === 0) {
         //     return res.status(400).json({
         //         message: "Sản phẩm không tồn tại"
         //     })
         // }
-        return res.status(200).json({ checkSearchAll })
+        return res.status(200).json({ checkSearchName })
+    } catch (error) {
+        return res.status(400).json({
+            message: error
+        })
+    }
+}
+export const searchProductsNameOne = async (req, res) => {
+
+    try {
+        const checkSearchNameOne = await products.find({ name: req.body.name })
+        // if (checkSearchName.  === 0) {
+        //     return res.status(400).json({
+        //         message: "Sản phẩm không tồn tại"
+        //     })
+        // }
+        return res.status(200).json({ checkSearchNameOne })
+    } catch (error) {
+        return res.status(400).json({
+            message: error
+        })
+    }
+}
+export const searchProductsPrice = async (req, res) => {
+    try {
+        const checkSearchPrice = await products.find({
+            price: {
+                $gte: req.body.priceMin,
+                $lte: req.body.priceMax
+            }
+        })
+        if (checkSearchPrice.length === 0) {
+            return res.status(400).json({
+                message: "Sản phẩm không tồn tại"
+            })
+        }
+        return res.status(200).json(checkSearchPrice)
     } catch (error) {
         return res.status(400).json({
             message: error
@@ -111,6 +145,29 @@ export const searchProductsPriceMax = async (req, res) => {
             })
         }
         return res.status(200).json(checkSearchPrice)
+    } catch (error) {
+        return res.status(400).json({
+            message: error
+        })
+    }
+}
+export const searchProducts = async (req, res) => {
+    try {
+        const checkSearch = await products.find({
+            price: {
+                $lte: req.body.priceMax,
+                $gte: req.body.priceMin
+            },
+            name: {
+                $regex: req.body.name
+            }
+        })
+        if (checkSearch.length === 0) {
+            return res.status(400).json({
+                message: "Sản phẩm không tồn tại"
+            })
+        }
+        return res.status(200).json(checkSearch)
     } catch (error) {
         return res.status(400).json({
             message: error
