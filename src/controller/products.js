@@ -153,6 +153,38 @@ export const searchProductsPriceMax = async (req, res) => {
 }
 export const searchProducts = async (req, res) => {
     try {
+        const { priceMax, priceMin, name } = req.body
+        if (req.body.name = "" || !req.body.name) {
+            const checkSearchPrice = await products.find({
+                price: {
+                    $gte: req.body.priceMin,
+                    $lte: req.body.priceMax
+                }
+            })
+            return res.status(200).json(checkSearchPrice)
+        }
+        if (req.body.priceMin = "" || !req.body.priceMin) {
+            const checkSearch = await products.find({
+                price: {
+                    $lte: req.body.priceMax,
+                },
+                name: {
+                    $regex: req.body.name
+                }
+            })
+            return res.status(200).json(checkSearch)
+        }
+        if (req.body.priceMax = "" || !req.body.priceMax) {
+            const checkSearch = await products.find({
+                price: {
+                    $gte: req.body.priceMin,
+                },
+                name: {
+                    $regex: req.body.name
+                }
+            })
+            return res.status(200).json(checkSearch)
+        }
         const checkSearch = await products.find({
             price: {
                 $lte: req.body.priceMax,
