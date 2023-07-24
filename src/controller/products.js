@@ -152,60 +152,37 @@ export const searchProductsPriceMax = async (req, res) => {
     }
 }
 export const searchProducts = async (req, res) => {
+
+
     try {
-        const { priceMax, priceMin, name } = req.body
-        if (req.body.name = "" || !req.body.name) {
-            const checkSearchPrice = await products.find({
-                price: {
-                    $gte: req.body.priceMin,
-                    $lte: req.body.priceMax
-                }
-            })
-            return res.status(200).json(checkSearchPrice)
+        const { priceMax, priceMin, name } = req.body;
+
+        // let searchQuery = {};
+        // if (name && !isNaN(name)) {
+        //     searchQuery.price = { ...searchQuery.price, $regex: String(name) };
+        // }
+        if (priceMin && !isNaN(priceMin)) {
+            searchQuery.price = { ...searchQuery.price, $gte: Number(priceMin) };
         }
-        if (req.body.priceMin = "" || !req.body.priceMin) {
-            const checkSearch = await products.find({
-                price: {
-                    $lte: req.body.priceMax,
-                },
-                name: {
-                    $regex: req.body.name
-                }
-            })
-            return res.status(200).json(checkSearch)
+        if (priceMax && !isNaN(priceMax)) {
+            searchQuery.price = { ...searchQuery.price, $lte: Number(priceMax) };
         }
-        if (req.body.priceMax = "" || !req.body.priceMax) {
-            const checkSearch = await products.find({
-                price: {
-                    $gte: req.body.priceMin,
-                },
-                name: {
-                    $regex: req.body.name
-                }
-            })
-            return res.status(200).json(checkSearch)
-        }
-        const checkSearch = await products.find({
-            price: {
-                $lte: req.body.priceMax,
-                $gte: req.body.priceMin
-            },
-            name: {
-                $regex: req.body.name
-            }
-        })
+
+        const checkSearch = await products.find(searchQuery);
+
         if (checkSearch.length === 0) {
             return res.status(400).json({
                 message: "Sản phẩm không tồn tại"
-            })
+            });
         }
-        return res.status(200).json(checkSearch)
+
+        return res.status(200).json(checkSearch);
     } catch (error) {
         return res.status(400).json({
-            message: error
-        })
+            message: error.message
+        });
     }
-}
+};
 export const searchProductsPriceSort = async (req, res) => {
     try {
         const checkSearchPrice = await products.find().sort({ price: -1 })
