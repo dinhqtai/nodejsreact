@@ -4,6 +4,10 @@ const Color = new mongoose.Schema({
         type: String,
         require: true
     },
+    code: {
+        type: String,
+        require: true
+    },
     created_at: {
         type: String,
         require: true
