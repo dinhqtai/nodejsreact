@@ -15,6 +15,10 @@ const Quantily = new mongoose.Schema({
         ref: "DataProducts",
         require: true
     },
+    quantily: {
+        type: Number,
+        require: true
+    },
     created_at: {
         type: String,
         require: true
