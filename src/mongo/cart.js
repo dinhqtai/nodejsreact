@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
 const Cart = new mongoose.Schema({
+    idUser: {
+        type: mongoose.Types.ObjectId,
+        ref: "user",
+        require: true
+    },
     Cart: [
         {
             _id: {
@@ -11,15 +16,14 @@ const Cart = new mongoose.Schema({
                 type: Number,
                 require: true
             },
-            soLuong: {
+            quantity: {
                 type: Number,
                 require: true
             },
         }
     ],
-    idUser: {
-        type: mongoose.Types.ObjectId,
-        ref: "user",
+    created_at: {
+        type: String,
         require: true
     }
 })
