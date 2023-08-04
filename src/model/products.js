@@ -5,5 +5,5 @@ export const ModelProducts = Joi.object({
     desc: Joi.string().required(),
     images: Joi.string().required(),
     soLuong: Joi.number().required(),
-    category_id: Joi.string().required()
+    category_id: Joi.string()
 })
