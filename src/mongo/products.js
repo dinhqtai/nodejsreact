@@ -8,10 +8,6 @@ const Products = new mongoose.Schema({
     type: Number,
     require: true
   },
-  original_price: {
-    type: Number,
-    require: true
-  },
   images: {
     type: String,
     require: true
@@ -20,15 +16,6 @@ const Products = new mongoose.Schema({
     type: String,
     require: true
   },
-  quantily_id: [
-    {
-      quantily_id: {
-        type: mongoose.Types.ObjectId,
-        ref: "QuantilyProducts",
-        require: true
-      }
-    }
-  ],
   category_id: {
     type: mongoose.Types.ObjectId,
     ref: "categoryProducts",

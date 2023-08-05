@@ -9,6 +9,8 @@ import routerCategory from "./routes/category.js";
 import routerColorProducts from "./routes/colorProducts.js";
 import routerDataProducts from "./routes/dataProducts.js";
 import routerQuantilyProducts from "./routes/quantily.js";
+import routerHistory from "./routes/history.js";
+import routerCart from "./routes/cart.js";
 //config
 const app = express();
 const API_DB = process.env.API_DB;
@@ -23,7 +25,8 @@ app.use("/api", routerCategory)
 app.use("/api", routerColorProducts)
 app.use("/api", routerDataProducts)
 app.use("/api", routerQuantilyProducts)
-
+app.use("/api", routerHistory)
+app.use("/api", routerCart)
 // router
 app.use("/api", router);
 

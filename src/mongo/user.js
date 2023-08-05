@@ -4,10 +4,6 @@ const Users = new mongoose.Schema({
         type: String,
         require: true
     },
-    money: {
-        type: Number,
-        require: true
-    },
     email: {
         type: String,
         require: true
@@ -20,23 +16,7 @@ const Users = new mongoose.Schema({
         {
             _id: {
                 type: mongoose.Types.ObjectId,
-                ref: "Product",
-                require: true
-            },
-            images: {
-                type: String,
-                require: true
-            },
-            name: {
-                type: String,
-                require: true
-            },
-            price: {
-                type: Number,
-                require: true
-            },
-            soLuong: {
-                type: Number,
+                ref: "History",
                 require: true
             }
         }

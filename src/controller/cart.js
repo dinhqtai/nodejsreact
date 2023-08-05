@@ -21,8 +21,14 @@ export const getCart = async (req, res) => {
 }
 export const postCart = async (req, res) => {
     try {
-        const Cart = await cart.create(req.body)
-        return res.status(200).json(Cart)
+        const checkCartUser = await cart.findOne({ idUser: req.body.idUser })
+        if (!checkCartUser) {
+            const Cart = await cart.create(req.body)
+        }
+        const updateCart = [...checkCartUser.Cart, ...req.body.Cart]
+        console.log(updateCart)
+        const updateCartUser = await cart.findByIdAndUpdate(checkCartUser._id, { Cart: updateCart })
+        return res.status(200).json(updateCartUser)
     } catch (error) {
         return res.status(400).json({
             message: error
