@@ -23,7 +23,6 @@ export const getHistory = async (req, res) => {
 }
 export const postHistory = async (req, res) => {
     try {
-        const {diaChi}
         const Cart = await itemHistory.create(req.body)
         return res.status(200).json(Cart)
     } catch (error) {

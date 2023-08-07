@@ -2,7 +2,14 @@ import { ModelProducts } from "../shema/products";
 import products from "../mongo/products";
 import category from "../mongo/category";
 import { DateTime } from "luxon";
-const timeNow = DateTime.now().toLocaleString({ weekday: 'short', month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+const timeNow = DateTime.now().toLocaleString({
+  weekday: "short",
+  month: "short",
+  day: "2-digit",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+});
 export const getAll = async (req, res) => {
   try {
     const Product = await products.find().populate("category_id")
