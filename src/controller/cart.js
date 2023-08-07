@@ -26,7 +26,6 @@ export const postCart = async (req, res) => {
             const Cart = await cart.create(req.body)
         }
         const updateCart = [...checkCartUser.Cart, ...req.body.Cart]
-        console.log(updateCart)
         const updateCartUser = await cart.findByIdAndUpdate(checkCartUser._id, { Cart: updateCart })
         return res.status(200).json(updateCartUser)
     } catch (error) {

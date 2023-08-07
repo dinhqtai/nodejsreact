@@ -4,6 +4,6 @@ const router = express.Router();
 router.get("history", getAllHistory)
 router.get("/history/:id", getHistory)
 router.put("/history/:id", updateHistory)
-router.post("/history/:id", postHistory)
+router.post("/history", postHistory)
 router.delete("/history/:id", deleteHistory)
 export default router;
