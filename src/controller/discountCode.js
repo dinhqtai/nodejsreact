@@ -1,4 +1,4 @@
-import { AddDiscount } from "../model/discountCode"
+import { AddDiscount } from "../shema/discountCode"
 import discountCode from "../mongo/discountCode"
 import { DateTime } from "luxon"
 const timeNow = DateTime.now().toLocaleString({ weekday: 'short', month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })

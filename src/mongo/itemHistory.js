@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const statusCart = ["Đơn hàng chờ xác nhận", "Đang được chuẩn bị", "Đang giao", "Đang giao"]
-const History = new mongoose.Schema({
+const itemHistory = new mongoose.Schema({
     idUser: {
         type: mongoose.Types.ObjectId,
         ref: "User",
@@ -30,4 +30,4 @@ const History = new mongoose.Schema({
         require: true
     }
 })
-export default mongoose.model("History", History);
+export default mongoose.model("itemHistory", itemHistory);

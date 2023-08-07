@@ -1,4 +1,4 @@
-import { ModelProducts } from "../model/products";
+import { ModelProducts } from "../shema/products";
 import products from "../mongo/products";
 import category from "../mongo/category";
 import { DateTime } from "luxon";

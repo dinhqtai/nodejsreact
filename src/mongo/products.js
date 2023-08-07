@@ -8,13 +8,18 @@ const Products = new mongoose.Schema({
     type: Number,
     require: true
   },
+  original_price: {
+    type: Number,
+    require: true
+  },
   images: {
     type: String,
     require: true
   },
   desc: {
     type: String,
-    require: true
+    require: true,
+
   },
   category_id: {
     type: mongoose.Types.ObjectId,
@@ -26,4 +31,5 @@ const Products = new mongoose.Schema({
     require: true
   }
 })
+Products.index({ desc: 'text' })
 export default mongoose.model("Products", Products)

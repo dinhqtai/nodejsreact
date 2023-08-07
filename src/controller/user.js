@@ -3,22 +3,23 @@ import bcrypt from "bcryptjs"
 import user from "../mongo/user";
 import jwt from "jsonwebtoken"
 import { DateTime } from "luxon";
-import { Signin, Signup } from "../model/user";
+import { Signin, Signup } from "../shema/user";
 const timeNow = DateTime.now().toLocaleString({ weekday: 'short', month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
 export const signup = async (req, res) => {
     try {
-        const { error } = Signup.validate(req.body)
-        if (error) {
+        const { password, email, name, phone, role, confirmPassword } = req.body;
+        const checkEmail = await user.findOne({ email: req.body.email })
+        if (checkEmail) {
             return res.status(400).json({
-                message: "Pass sai"
+                message: "email đã tồn tại"
             })
         }
-        const { password, email, name, phone } = req.body;
         const maHoa = await bcrypt.hash(password, 10);
         const users = await user.create({
             name,
             phone,
             email,
+            role,
             password: maHoa,
             timeUpdate: timeNow
         })
@@ -26,20 +27,20 @@ export const signup = async (req, res) => {
         return res.status(200).json({
             users,
         })
-    } catch {
+    } catch (error) {
         return res.status(400).json({
-            message: "Pass sai"
+            message: error
         })
     }
 }
 export const signin = async (req, res) => {
     try {
-        const { error } = Signin.validate(req.body)
-        if (error) {
-            return res.status(400).json({
-                message: "Pass sai"
-            })
-        }
+        // const { error } = Signin.validate(req.body)
+        // if (error) {
+        //     return res.status(400).json({
+        //         message: error
+        //     })
+        // }
         const { password, email } = req.body;
         const users = await user.findOne({ email: req.body.email })
         if (!users) {

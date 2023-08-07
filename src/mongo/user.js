@@ -4,11 +4,19 @@ const Users = new mongoose.Schema({
         type: String,
         require: true
     },
+    phone: {
+        type: Number,
+        require: true
+    },
     email: {
         type: String,
         require: true
     },
     password: {
+        type: String,
+        require: true
+    },
+    confirmPassword: {
         type: String,
         require: true
     },
@@ -30,6 +38,11 @@ const Users = new mongoose.Schema({
             }
         }
     ],
+    role: {
+        type: String,
+        ref: "member",
+        required: [true, "Please select a Role"]
+    },
     timeUpdate: {
         type: String,
         require: true

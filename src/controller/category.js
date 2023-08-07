@@ -1,5 +1,5 @@
 import { get } from "superagent";
-import { ModelCategory } from "../model/category";
+import { ModelCategory } from "../shema/category";
 import category from "../mongo/category";
 import products from "../mongo/products";
 import { DateTime } from "luxon";
