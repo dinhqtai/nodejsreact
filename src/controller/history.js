@@ -1,9 +1,11 @@
-// import History from "../mongo/History"
+import { types } from "joi"
+import history from "../mongo/history"
+import user from "../mongo/user"
 import { DateTime } from "luxon"
 const timeNow = DateTime.now().toLocaleString({ weekday: 'short', month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
 export const getAllHistory = async (req, res) => {
     try {
-        const getHistory = await History.find()
+        const getHistory = await history.find().populate("user_id").populate("cart_id")
         return res.status(200).json(getHistory)
     } catch (error) {
         return res.status(400).json({
@@ -11,9 +13,9 @@ export const getAllHistory = async (req, res) => {
         })
     }
 }
-export const getHistory = async (req, res) => {
+export const getHistoryByUser = async (req, res) => {
     try {
-        const getHistory = await History.findById(req.params.id)
+        const getHistory = await history.find({ user_id: req.body.user_id })
         return res.status(200).json(getHistory)
     } catch (error) {
         return res.status(400).json({
@@ -21,21 +23,30 @@ export const getHistory = async (req, res) => {
         })
     }
 }
-export const postHistory = async (req, res) => {
+export const getHistoryById = async (req, res) => {
     try {
-        // const CheckHistory = await History.findOne({ idUser: req.body.idUser })
-        // if (!CheckHistory) {
-        const PostHistory = await History.create({
-            idUser,
+        const getHistory = await history.findById(req.params.id)
+        return res.status(200).json(getHistory)
+    } catch (error) {
+        return res.status(400).json({
+            message: error
+        })
+    }
+}
+export const postAndUpdateHistoryUser = async (req, res) => {
+    try {
+        const { user_id, diaChi, cart_id } = req.body
+        const PostHistory = await history.create({
+            user_id,
             diaChi,
-            idCart,
+            cart_id,
             status: "Đơn hàng chờ xác nhận",
             created_at: timeNow
         })
-        // }
-        // const updateHistory = [...CheckHistory.History, ...req.body.History]
-        // const Update = await History.findByIdAndUpdate(CheckHistory._id, { History: updateHistory })
-        // return res.status(200).json(Update)
+        const getUser = await user.findOne({ _id: req.body.user_id })
+        const History = [...getUser.history, PostHistory]
+        const updateHistory = await user.findByIdAndUpdate({ _id: req.body.user_id }, { history: History })
+        return res.status(200).json(PostHistory)
     } catch (error) {
         return res.status(400).json({
             message: error.message
@@ -44,7 +55,7 @@ export const postHistory = async (req, res) => {
 }
 export const updateHistory = async (req, res) => {
     try {
-        const Cart = await History.findByIdAndUpdate(req.params.id, req.body)
+        const Cart = await history.findByIdAndUpdate(req.params.id, req.body)
         return res.status(200).json(Cart)
     } catch (error) {
         return res.status(400).json({
@@ -54,7 +65,7 @@ export const updateHistory = async (req, res) => {
 }
 export const deleteHistory = async (req, res) => {
     try {
-        const Cart = await History.findByIdAndDelete(req.params.id)
+        const Cart = await history.findByIdAndDelete(req.params.id)
         return res.status(200).json(Cart)
     } catch (error) {
         return res.status(400).json({

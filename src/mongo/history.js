@@ -1,24 +1,30 @@
+
 import mongoose from "mongoose";
-const history = new mongoose.Schema({
-    name: {
+const statusCart = ["Đơn hàng chờ xác nhận", "Đang được chuẩn bị", "Đang giao", "Hoàn thành"]
+const History = new mongoose.Schema({
+    user_id: {
+        type: mongoose.Types.ObjectId,
+        ref: "User",
+        require: true
+    },
+    diaChi: {
         type: String,
         require: true
     },
-    price: {
-        type: Number,
+    cart_id: {
+        type: mongoose.Types.ObjectId,
+        ref: "Cart",
         require: true
     },
-    discount: {
+    status: {
         type: String,
+        enum: statusCart,
         require: true
+
     },
-    soLuong: {
-        type: Number,
-        require: true
-    },
-    timeUpdate: {
+    created_at: {
         type: String,
         require: true
     }
 })
-export default mongoose model("History", history) 
+export default mongoose.model("History", History); 
