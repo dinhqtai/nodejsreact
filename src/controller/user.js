@@ -63,11 +63,22 @@ export const signin = async (req, res) => {
 }
 export const getUser = async (req, res) => {
     try {
-        const users = await user.findById(req.params.id).populate("history")
+        const users = await user.findById(req.params.id).populate("history._id")
         return res.status(200).json(users)
     } catch (error) {
         return res.status(400).json({
             message: error
+        })
+    }
+}
+export const getUserHistory = async (req, res) => {
+    try {
+        const users = await user.findById(req.params.id).populate("history._id")
+        const Userhistory = users.history
+        return res.status(200).json(Userhistory)
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message
         })
     }
 }
