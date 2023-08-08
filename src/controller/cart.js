@@ -1,7 +1,7 @@
 import cart from "../mongo/cart"
 export const getAllCart = async (req, res) => {
     try {
-        const Cart = await cart.find()
+        const Cart = await cart.find().populate("Cart._id")
         return res.status(200).json(Cart)
     } catch (error) {
         return res.status(400).json({
@@ -26,11 +26,11 @@ export const postCart = async (req, res) => {
             const Cart = await cart.create(req.body)
         }
         const updateCart = [...checkCartUser.Cart, ...req.body.Cart]
-        const updateCartUser = await cart.findByIdAndUpdate(checkCartUser._id, { Cart: updateCart })
+        const updateCartUser = await cart.findByIdAndUpdate(checkCartUser._id, { Cart: updateCart }).populate("Cart._id")
         return res.status(200).json(updateCartUser)
     } catch (error) {
         return res.status(400).json({
-            message: error
+            message: error.message
         })
     }
 }
